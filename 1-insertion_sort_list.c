@@ -5,7 +5,7 @@
  * @l1: This is the address of the first node.
  * @l2: This is the address of the second node
  *
- *return: This function does not return any value (void)
+ * return: This function does not return any value (void)
  */
 void ar_chang(listint_t *l1, listint_t *l2)
 {
@@ -21,6 +21,7 @@ void ar_chang(listint_t *l1, listint_t *l2)
         l2->prev = l1->prev;
         l1->prev = l2;
         l2->next = l1;
+}
 
 /**
  * insertion_sort_list - This function performs an insertion sort on a doubly-linked list.
@@ -30,26 +31,38 @@ void ar_chang(listint_t *l1, listint_t *l2)
  */
 void insertion_sort_list(listint_t **list)
 {
-        listint_t *k, *y;
+     listint_t *currentNode, *iterator;
 
-        if (!list || !*list || !(*list)->next)
-                return;
-        k = (*list)->next;
-        while (k)
+    if (!list || !*list || !(*list)->next)
+        return;
+
+   
+    currentNode = (*list)->next;
+    while (currentNode)
+    {
+        iterator = currentNode;
+        currentNode = currentNode->next;
+       
+        while (iterator && iterator->prev)
         {
-                y = k;
-                k = k->next;
-                while (y && y->prev)
-                {
-                        if (y->prev->n > y->n)
-                        {
-                               ar_chang(y->prev, y);
-                               if (!y->prev)
-                                       *list = y;
-                               print_list((const listint_t *)*list);
-                        }
-                        else
-                               y = y->prev;
-               }
+            
+            if (iterator->prev->n > iterator->n)
+            {
+              
+                ar_chang(iterator->prev, iterator);
+
+                
+                if (!iterator->prev)
+                    *list = iterator;
+
+               
+                print_list((const listint_t *)*list);
+            }
+            else
+            {
+               
+                iterator = iterator->prev;
+            }
         }
+    }
 }
